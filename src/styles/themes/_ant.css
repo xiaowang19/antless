@@ -17,53 +17,53 @@
 
   /* Default Button */
   .ui-button--default {
-    @apply bg-white text-black border border-gray-300;
-    @apply hover:border-blue-500 hover:text-blue-500;
-    @apply focus:border-blue-500 focus:text-blue-500;
-    @apply disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-400;
+    @apply bg-white text-ant-text border border-ant-border;
+    @apply hover:border-ant-primary hover:text-ant-primary;
+    @apply focus:border-ant-primary focus:text-ant-primary;
+    @apply disabled:bg-ant-bg-disabled disabled:border-ant-border disabled:text-ant-disabled;
   }
 
   /* Primary Button */
   .ui-button--primary {
-    @apply bg-blue-500 text-white border border-blue-500;
-    @apply hover:bg-blue-600 hover:border-blue-600;
-    @apply focus:bg-blue-600 focus:border-blue-600;
-    @apply disabled:bg-blue-300 disabled:border-blue-300 disabled:text-white;
+    @apply bg-ant-primary text-white border-ant-primary;
+    @apply hover:bg-ant-primary-hover hover:border-ant-primary-hover;
+    @apply focus:bg-ant-primary-hover focus:border-ant-primary-hover;
+    @apply disabled:bg-ant-bg-disabled disabled:border-ant-border disabled:text-ant-disabled;
   }
 
   /* Dashed Button */
   .ui-button--dashed {
-    @apply bg-white text-black border border-dashed border-gray-300;
-    @apply hover:border-blue-500 hover:text-blue-500;
-    @apply focus:border-blue-500 focus:text-blue-500;
-    @apply disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-400;
+    @apply bg-white text-ant-text border border-dashed border-ant-border;
+    @apply hover:border-ant-primary hover:text-ant-primary;
+    @apply focus:border-ant-primary focus:text-ant-primary;
+    @apply disabled:bg-ant-bg-disabled disabled:border-ant-border disabled:text-ant-disabled;
   }
 
   /* Text Button */
   .ui-button--text {
-    @apply bg-transparent text-black border-transparent;
-    @apply hover:bg-gray-100;
-    @apply focus:bg-gray-100;
-    @apply disabled:text-gray-400 disabled:bg-transparent;
+    @apply bg-transparent text-ant-text border-transparent;
+    @apply hover:bg-ant-bg-disabled;
+    @apply focus:bg-ant-bg-disabled;
+    @apply disabled:text-ant-disabled disabled:bg-transparent;
   }
 
   /* Link Button */
   .ui-button--link {
-    @apply bg-transparent text-blue-500 border-transparent;
-    @apply hover:text-blue-600;
-    @apply focus:text-blue-600;
-    @apply disabled:text-gray-400;
+    @apply bg-transparent text-ant-primary border-transparent;
+    @apply hover:text-ant-primary-hover;
+    @apply focus:text-ant-primary-hover;
+    @apply disabled:text-ant-disabled;
   }
 
   /* Sizes */
   .ui-button--small {
-    @apply h-6 px-2 text-sm rounded-sm;
+    @apply h-6 px-2 text-ant-sm rounded-ant-sm;
   }
   .ui-button--middle {
-    @apply h-8 px-4 text-base rounded;
+    @apply h-8 px-4 text-ant-base rounded-ant-base;
   }
   .ui-button--large {
-    @apply h-10 px-6 text-lg rounded-md;
+    @apply h-10 px-6 text-ant-lg rounded-ant-lg;
   }
 
   /* Loading State */
@@ -76,15 +76,12 @@
      ========================================================================== */
 
   .ui-switch {
-    /* Sizing */
     @apply h-5 w-10 rounded-full p-0.5;
-
-    /* Colors */
-    @apply bg-gray-300; /* Off state */
-    @apply focus:ring-blue-500;
+    @apply bg-gray-300; /* Off state, using a generic gray for now */
+    @apply focus:ring-2 focus:ring-ant-primary/50;
 
     &.is-active {
-      @apply bg-blue-500; /* On state */
+      @apply bg-ant-primary; /* On state */
     }
 
     &.is-disabled {
@@ -93,10 +90,7 @@
   }
 
   .ui-switch__slider {
-    /* Sizing & Shape */
     @apply h-4 w-4 rounded-full bg-white shadow;
-
-    /* Positioning */
     transform: translateX(0);
     .is-active & {
       transform: translateX(100%);
@@ -108,31 +102,31 @@
      ========================================================================== */
 
   .ui-input {
-    @apply bg-white text-black border border-gray-300 rounded;
-    @apply placeholder-gray-400;
+    @apply bg-white text-ant-text border border-ant-border rounded-ant-base;
+    @apply placeholder-ant-text-secondary;
 
     &:hover {
-      @apply border-blue-500;
+      @apply border-ant-primary;
     }
 
     &:focus {
-      @apply border-blue-500 ring-2 ring-blue-200 ring-opacity-50;
+      @apply border-ant-primary ring-2 ring-ant-primary/20;
     }
 
     &.is-disabled {
-      @apply bg-gray-100 border-gray-200 text-gray-400;
+      @apply bg-ant-bg-disabled border-ant-border text-ant-disabled;
     }
   }
 
   /* Sizes */
   .ui-input--small {
-    @apply h-6 px-2 text-sm;
+    @apply h-6 px-2 text-ant-sm rounded-ant-sm;
   }
   .ui-input--middle {
-    @apply h-8 px-3 text-base;
+    @apply h-8 px-3 text-ant-base rounded-ant-base;
   }
   .ui-input--large {
-    @apply h-10 px-4 text-lg;
+    @apply h-10 px-4 text-ant-lg rounded-ant-lg;
   }
 
   /* ==========================================================================
@@ -140,15 +134,15 @@
      ========================================================================== */
 
   .ui-modal__panel {
-    @apply rounded-md bg-white p-6;
+    @apply rounded-ant-lg bg-white p-6;
   }
 
   .ui-modal__title {
-    @apply text-lg font-medium leading-6 text-gray-900;
+    @apply text-lg font-medium leading-6 text-ant-text;
   }
 
   .ui-modal__body {
-    @apply mt-2 text-sm text-gray-500;
+    @apply mt-2 text-ant-base text-ant-text-secondary;
   }
 
   .ui-modal__footer {
