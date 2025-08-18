@@ -1,0 +1,15 @@
+/* Main CSS Entry Point */
+
+/* 1. Import Tailwind's base styles */
+@tailwind base;
+
+/* 2. Import base, non-themed component styles */
+@import "./components.css";
+
+/* 3. Import all theme files */
+@import "./themes/_ant.css";
+/* In the future, other themes like _element.css would be imported here */
+
+/* 4. Import Tailwind's component and utility styles */
+@tailwind components;
+@tailwind utilities;
