@@ -331,22 +331,38 @@ const selected = ref(options.value[0]);
 
 ```vue
 <script setup>
+import { reactive, ref } from 'vue';
 import Form from './components/Form/Form.vue';
 import FormItem from './components/Form/FormItem.vue';
 import Input from './components/Input/Input.vue';
+
+const formRef = ref(null);
+const formData = reactive({ username: '' });
+const formRules = {
+  username: [{ required: true, message: 'Username is required' }]
+};
+
+const submitForm = () => {
+  formRef.value.validate().then(valid => { ... });
+}
 </script>
 <template>
-  <Form layout="horizontal">
-    <FormItem label="Username">
-      <Input />
+  <Form :model="formData" :rules="formRules" ref="formRef">
+    <FormItem label="Username" prop="username">
+      <Input v-model="formData.username" />
     </FormItem>
   </Form>
 </template>
 ```
 - **Form Props**:
   - `layout`: `'horizontal' | 'vertical'` (表单布局)
+  - `model`: `object` (表单数据对象)
+  - `rules`: `object` (表单校验规则，使用 async-validator 格式)
 - **FormItem Props**:
   - `label`: `string` (标签文本)
+  - `prop`: `string` (对应 `model` 中的字段名)
+- **Form Methods**:
+  - `validate()`: 调用此方法来校验整个表单，返回一个 Promise。
 
 ### Dropdown
 

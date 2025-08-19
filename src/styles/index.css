@@ -494,6 +494,19 @@
       @apply block mb-1 font-medium;
     }
   }
+
+  /* Error State */
+  .ui-form-item.is-error {
+    .ui-form-item__label {
+      @apply text-ant-red-text;
+    }
+    .ui-form-item__control .ui-input { /* A bit specific, but targets the input inside a errored item */
+      @apply border-ant-red-text;
+    }
+  }
+  .ui-form-item__error {
+    @apply text-ant-red-text text-ant-sm mt-1;
+  }
 }
 
 

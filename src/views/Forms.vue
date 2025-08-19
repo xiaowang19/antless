@@ -7,17 +7,38 @@ import Radio from '../components/Radio/Radio.vue';
 import Select from '../components/Select/Select.vue';
 import Form from '../components/Form/Form.vue';
 import FormItem from '../components/Form/FormItem.vue';
+import Button from '../components/Button/Button.vue';
+import type { FormRules } from 'async-validator';
 
-const switchState = ref(false);
-const inputValue = ref('');
-const checkboxState = ref(false);
-const radioState = ref('A');
+const formRef = ref<InstanceType<typeof Form> | null>(null);
+
+const formData = reactive({
+  username: '',
+  fruit: null,
+  agree: false,
+});
+
+const formRules: FormRules = {
+  username: [{ required: true, message: 'Username is required' }],
+  fruit: [{ required: true, message: 'Please select a fruit' }],
+  agree: [{ type: 'enum', enum: [true], message: 'You must agree to the terms' }],
+};
+
 const selectOptions = [
-  { label: 'Option 1', value: 'a' },
-  { label: 'Option 2', value: 'b' },
-  { label: 'Option 3', value: 'c' },
+  { label: 'Apple', value: 'apple' },
+  { label: 'Banana', value: 'banana' },
+  { label: 'Orange', value: 'orange' },
 ];
-const selectedOption = ref(selectOptions[0]);
+
+const handleSubmit = () => {
+  formRef.value?.validate().then((valid) => {
+    if (valid) {
+      alert('Form submitted successfully!');
+    } else {
+      alert('Validation failed!');
+    }
+  });
+};
 </script>
 
 <template>
@@ -89,15 +110,18 @@ const selectedOption = ref(selectOptions[0]);
     <!-- ================================================================== -->
     <div class="p-6 bg-white rounded-lg shadow">
       <h2 class="text-xl font-semibold text-gray-700 mb-4">Form</h2>
-      <Form>
-        <FormItem label="Username">
-          <Input placeholder="Enter username" />
+      <Form :model="formData" :rules="formRules" ref="formRef" class="w-1/2">
+        <FormItem label="Username" prop="username">
+          <Input v-model="formData.username" placeholder="Enter username" />
         </FormItem>
-        <FormItem label="Favorite Fruit">
-          <Select v-model="selectedOption" :options="selectOptions" />
+        <FormItem label="Favorite Fruit" prop="fruit">
+          <Select v-model="formData.fruit" :options="selectOptions" placeholder="Select a fruit" />
         </FormItem>
-        <FormItem label="Remember Me">
-          <Checkbox>Agree to terms</Checkbox>
+        <FormItem label="Agreement" prop="agree">
+          <Checkbox v-model="formData.agree">I agree to the terms and conditions</Checkbox>
+        </FormItem>
+        <FormItem label="">
+          <Button type="primary" @click="handleSubmit">Submit</Button>
         </FormItem>
       </Form>
     </div>
