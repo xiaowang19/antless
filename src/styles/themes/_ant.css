@@ -1,9 +1,0 @@
-/*
- * Diagnostic Styles
- *
- * If this style is applied, the CSS loading pipeline is working.
- */
-
-.theme-ant [class*="ui-"] {
-  border: 2px solid red !important;
-}

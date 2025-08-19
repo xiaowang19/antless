@@ -3,18 +3,171 @@
 /* 1. Import Tailwind's base styles */
 @tailwind base;
 
-/* 2. Import base, non-themed component styles */
-@import "./components.css";
-
-/* 3. Import all theme files */
-/* @import "./themes/_ant.css"; */
-/* In the future, other themes like _element.css would be imported here */
 
 /* ==========================================================================
-   DIAGNOSTIC STYLE
+   2. Base Component Styles (formerly components.css)
    ========================================================================== */
-.theme-ant [class*="ui-"] {
-  border: 2px solid red !important;
+
+.ui-button {
+  @apply inline-flex items-center justify-center relative font-medium text-center no-underline whitespace-nowrap select-none;
+  @apply focus:outline-none transition-all duration-200 ease-in-out;
+  @apply disabled:cursor-not-allowed;
+}
+
+.ui-button__content {
+  @apply flex items-center;
+}
+
+.ui-button__loader {
+  @apply w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin;
+  & + .ui-button__content {
+    @apply ml-2;
+  }
+}
+
+.ui-modal {
+  @apply relative z-10;
+}
+
+.ui-modal__overlay {
+  @apply fixed inset-0 bg-black bg-opacity-25;
+}
+
+.ui-modal__container {
+  @apply fixed inset-0 overflow-y-auto;
+}
+
+.ui-modal__panel-container {
+  @apply flex min-h-full items-center justify-center p-4 text-center;
+}
+
+.ui-modal__panel {
+  @apply w-full max-w-md transform overflow-hidden text-left align-middle shadow-xl transition-all;
+}
+
+.ui-switch {
+  @apply relative inline-flex items-center cursor-pointer;
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.ui-switch__slider {
+  @apply inline-block pointer-events-none;
+  @apply transition-transform duration-200 ease-in-out;
+}
+
+.ui-input {
+  @apply w-full relative inline-block;
+  @apply focus:outline-none transition-all duration-200 ease-in-out;
+  @apply disabled:cursor-not-allowed;
+}
+
+
+/* ==========================================================================
+   3. Ant Design Theme (formerly _ant.css)
+   ========================================================================== */
+.theme-ant {
+  /* Button Component Theme */
+  .ui-button--default {
+    @apply bg-white text-ant-text border border-ant-border;
+    @apply hover:border-ant-primary hover:text-ant-primary;
+    @apply focus:border-ant-primary focus:text-ant-primary;
+    @apply disabled:bg-ant-bg-disabled disabled:border-ant-border disabled:text-ant-disabled;
+  }
+  .ui-button--primary {
+    @apply bg-ant-primary text-white border-ant-primary;
+    @apply hover:bg-ant-primary-hover hover:border-ant-primary-hover;
+    @apply focus:bg-ant-primary-hover focus:border-ant-primary-hover;
+    @apply disabled:bg-ant-bg-disabled disabled:border-ant-border disabled:text-ant-disabled;
+  }
+  .ui-button--dashed {
+    @apply bg-white text-ant-text border border-dashed border-ant-border;
+    @apply hover:border-ant-primary hover:text-ant-primary;
+    @apply focus:border-ant-primary focus:text-ant-primary;
+    @apply disabled:bg-ant-bg-disabled disabled:border-ant-border disabled:text-ant-disabled;
+  }
+  .ui-button--text {
+    @apply bg-transparent text-ant-text border-transparent;
+    @apply hover:bg-ant-bg-disabled;
+    @apply focus:bg-ant-bg-disabled;
+    @apply disabled:text-ant-disabled disabled:bg-transparent;
+  }
+  .ui-button--link {
+    @apply bg-transparent text-ant-primary border-transparent;
+    @apply hover:text-ant-primary-hover;
+    @apply focus:text-ant-primary-hover;
+    @apply disabled:text-ant-disabled;
+  }
+  .ui-button--small {
+    @apply h-6 px-2 text-ant-sm rounded-ant-sm;
+  }
+  .ui-button--middle {
+    @apply h-8 px-4 text-ant-base rounded-ant-base;
+  }
+  .ui-button--large {
+    @apply h-10 px-6 text-ant-lg rounded-ant-lg;
+  }
+  .ui-button.is-loading {
+    @apply opacity-75 cursor-default;
+  }
+
+  /* Switch Component Theme */
+  .ui-switch {
+    @apply h-5 w-10 rounded-full p-0.5;
+    @apply bg-gray-300;
+    @apply focus:ring-2 focus:ring-ant-primary/50;
+    &.is-active {
+      @apply bg-ant-primary;
+    }
+    &.is-disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+  }
+  .ui-switch__slider {
+    @apply h-4 w-4 rounded-full bg-white shadow;
+    transform: translateX(0);
+    .is-active & {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Input Component Theme */
+  .ui-input {
+    @apply bg-white text-ant-text border border-ant-border rounded-ant-base;
+    @apply placeholder-ant-text-secondary;
+    &:hover {
+      @apply border-ant-primary;
+    }
+    &:focus {
+      @apply border-ant-primary ring-2 ring-ant-primary/20;
+    }
+    &.is-disabled {
+      @apply bg-ant-bg-disabled border-ant-border text-ant-disabled;
+    }
+  }
+  .ui-input--small {
+    @apply h-6 px-2 text-ant-sm rounded-ant-sm;
+  }
+  .ui-input--middle {
+    @apply h-8 px-3 text-ant-base rounded-ant-base;
+  }
+  .ui-input--large {
+    @apply h-10 px-4 text-ant-lg rounded-ant-lg;
+  }
+
+  /* Modal Component Theme */
+  .ui-modal__panel {
+    @apply rounded-ant-lg bg-white p-6;
+  }
+  .ui-modal__title {
+    @apply text-lg font-medium leading-6 text-ant-text;
+  }
+  .ui-modal__body {
+    @apply mt-2 text-ant-base text-ant-text-secondary;
+  }
+  .ui-modal__footer {
+    @apply mt-4 flex justify-end space-x-2;
+  }
 }
 
 
