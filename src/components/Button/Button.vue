@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 // Define Component Props
 interface Props {
   type?: 'primary' | 'default' | 'dashed' | 'text' | 'link';
@@ -29,7 +33,7 @@ const buttonClasses = computed(() => [
 </script>
 
 <template>
-  <button :class="buttonClasses" :disabled="disabled || loading">
+  <button v-bind="$attrs" :class="buttonClasses" :disabled="disabled || loading">
     <!-- Loading Icon (will be added later) -->
     <span v-if="loading" class="ui-button__loader"></span>
     <span class="ui-button__content">
