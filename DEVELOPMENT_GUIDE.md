@@ -16,8 +16,6 @@
 # cd <your-repo-name>
 
 # 2. 安装所有依赖项
-# 注意：在本项目中，我们已经帮你完成了所有安装。
-# 但如果你要从零开始，你需要运行以下命令。
 npm install
 
 # 3. 运行开发服务器
@@ -43,11 +41,8 @@ npm run dev
 │   │   │   └── Modal.vue
 │   │   └── Switch/
 │   │       └── Switch.vue
-│   ├── styles/              # 全局样式和主题
-│   │   ├── themes/
-│   │   │   └── _ant.css     # Ant Design 主题的样式文件
-│   │   ├── components.css   # 组件的“基础”样式 (无主题)
-│   │   └── index.css        # CSS 主入口文件
+│   ├── styles/              # 全局样式
+│   │   └── index.css        # CSS 主入口文件 (包含所有样式)
 │   ├── App.vue              # 根组件，也是我们的组件展示页
 │   └── main.ts              # 应用主入口文件
 ├── tailwind.config.js       # TailwindCSS 配置文件
@@ -63,28 +58,27 @@ npm run dev
 
 在每个组件的 `.vue` 文件中，我们不直接使用像 `bg-blue-500` 这样的原子类。相反，我们使用我们自己定义的、有语义的“抽象类”。例如，`<button class="ui-button ui-button--primary">`。
 
-- **`.ui-button`**: 这是一个基础类。它定义了一个按钮的结构、过渡效果、禁用状态等不随主题变化的样式。这些样式被定义在 `src/styles/components.css` 中。
-
+- **`.ui-button`**: 这是一个基础类。它定义了一个按钮的结构、过渡效果、禁用状态等不随主题变化的样式。
 - **`.ui-button--primary`**: 这是一个修饰类。它定义了按钮在某个特定主题下的外观（例如，颜色、边框）。
 
-#### 3.2. 主题文件
+所有这些样式现在都合并在了 `src/styles/index.css` 文件中。
 
-所有和“外观”相关的样式都定义在 `src/styles/themes/` 目录下的主题文件中。目前我们只有一个主题 `_ant.css`。
+#### 3.2. 主题定义
 
-在 `_ant.css` 文件中，所有的样式都被一个根类名 `.theme-ant` 包裹。
+所有和“外观”相关的样式都定义在 `index.css` 文件中，并被一个根类名 `.theme-ant` 包裹。
 
 ```css
-/* src/styles/themes/_ant.css */
+/* src/styles/index.css */
 
 .theme-ant {
   /* 主题下的 primary 按钮样式 */
   .ui-button--primary {
-    @apply bg-blue-500 text-white border-blue-500;
+    @apply bg-ant-primary text-white border-ant-primary;
   }
 
   /* 主题下的 default 按钮样式 */
   .ui-button--default {
-    @apply bg-white text-black border-gray-300;
+    @apply bg-white text-ant-text border-ant-border;
   }
 }
 ```
@@ -93,10 +87,7 @@ npm run dev
 
 我们在 `App.vue` 的最外层 `<div>` 上添加了 `class="theme-ant"`，这样所有被它包裹的、使用了 `ui-*` 类的组件，都会自动应用 Ant Design 的主题样式。
 
-未来如果我们想添加一个 Element Plus 的主题，我们只需要：
-1. 创建一个新的 `_element.css` 主题文件。
-2. 在 `index.css` 中引入它。
-3. 把根节点的类名从 `theme-ant` 改为 `theme-element`。
+未来如果我们想添加一个 Element Plus 的主题，我们只需要在 `index.css` 中添加一个新的根类 `.theme-element` 和对应的样式即可。
 
 ## 4. 如何使用现有组件
 
