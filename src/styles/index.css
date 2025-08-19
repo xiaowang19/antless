@@ -380,6 +380,95 @@
       @apply bg-ant-bg-disabled;
     }
   }
+
+  /* ==========================================================================
+     Tooltip Component Theme
+     ========================================================================== */
+  .ui-tooltip-wrapper {
+    @apply inline-block;
+  }
+  .ui-tooltip {
+    @apply z-20;
+  }
+  .ui-tooltip__content {
+    @apply bg-gray-700 text-white text-ant-sm px-3 py-1.5 rounded-ant-base;
+  }
+  .ui-tooltip__arrow,
+  .ui-tooltip__arrow::before {
+    @apply absolute w-2 h-2 bg-inherit;
+  }
+  .ui-tooltip__arrow {
+    @apply invisible;
+  }
+  .ui-tooltip__arrow::before {
+    @apply visible transform rotate-45;
+    content: '';
+  }
+  /* Popper placement styling */
+  .ui-tooltip[data-popper-placement^='top'] > .ui-tooltip__arrow {
+    @apply bottom-[-4px];
+  }
+  .ui-tooltip[data-popper-placement^='bottom'] > .ui-tooltip__arrow {
+    @apply top-[-4px];
+  }
+  .ui-tooltip[data-popper-placement^='left'] > .ui-tooltip__arrow {
+    @apply right-[-4px];
+  }
+  .ui-tooltip[data-popper-placement^='right'] > .ui-tooltip__arrow {
+    @apply left-[-4px];
+  }
+
+  /* ==========================================================================
+     Tabs Component Theme
+     ========================================================================== */
+  .ui-tabs__list {
+    @apply flex space-x-1 border-b border-ant-border;
+  }
+  /* User should apply this class to the Headless UI Tab component */
+  .ui-tab {
+    @apply px-4 py-2.5 text-ant-base font-medium border-b-2;
+    @apply focus:outline-none;
+
+    /* Default state */
+    @apply border-transparent text-ant-text-secondary hover:text-ant-primary;
+
+    /* Selected state (Headless UI adds `[aria-selected='true']`) */
+    &[aria-selected='true'] {
+      @apply text-ant-primary border-ant-primary;
+    }
+  }
+  .ui-tabs__panels {
+    @apply mt-2;
+  }
+
+  /* ==========================================================================
+     Select Component Theme
+     ========================================================================== */
+  .ui-select {
+    @apply w-full;
+  }
+  .ui-select__button {
+    @apply relative w-full cursor-default text-left;
+    /* Mimic the Input component style */
+    @apply bg-white text-ant-text border border-ant-border rounded-ant-base;
+    @apply h-8 px-3 text-ant-base;
+    @apply focus:outline-none focus:border-ant-primary focus:ring-2 focus:ring-ant-primary/20;
+  }
+  .ui-select__arrow {
+    @apply pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-gray-400;
+  }
+  .ui-select__options {
+    @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-ant-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10;
+  }
+  .ui-select__option {
+    @apply relative cursor-default select-none py-2 px-4;
+    &.is-active {
+      @apply bg-ant-bg-disabled;
+    }
+    &.is-selected {
+      @apply font-semibold;
+    }
+  }
 }
 
 

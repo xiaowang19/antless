@@ -41,9 +41,14 @@ npm run dev
 │   │   │   └── Modal.vue
 │   │   └── Switch/
 │   │       └── Switch.vue
+│   ├── views/               # 组件展示页的分类视图
+│   │   ├── General.vue
+│   │   ├── Layout.vue
+│   │   ├── Feedback.vue
+│   │   └── Forms.vue
 │   ├── styles/              # 全局样式
 │   │   └── index.css        # CSS 主入口文件 (包含所有样式)
-│   ├── App.vue              # 根组件，也是我们的组件展示页
+│   ├── App.vue              # 根组件，应用主布局
 │   └── main.ts              # 应用主入口文件
 ├── tailwind.config.js       # TailwindCSS 配置文件
 ├── postcss.config.js        # PostCSS 配置文件
@@ -261,6 +266,66 @@ import Card from './components/Card/Card.vue';
 - **Slots**:
   - `default`: 卡片主体内容。
   - `extra`: 卡片右上角的额外内容。
+
+### Tooltip
+
+```vue
+<script setup>
+import Tooltip from './components/Tooltip/Tooltip.vue';
+</script>
+<template>
+  <Tooltip title="Tooltip content">
+    <Button>Hover me</Button>
+  </Tooltip>
+</template>
+```
+- **Props**:
+  - `title`: `string` (提示框内容)
+  - `placement`: `'(top|bottom|left|right)(-start|-end)?'` (位置)
+
+### Tabs
+
+```vue
+<script setup>
+import Tabs from './components/Tabs/Tabs.vue';
+import { Tab, TabPanel } from '@headlessui/vue';
+const categories = ref([...]); // Your data array
+</script>
+<template>
+  <Tabs>
+    <template #list>
+      <Tab v-for="cat in categories" as="template" v-slot="{ selected }">
+        <button :class="['ui-tab', { 'is-selected': selected }]">{{ cat.title }}</button>
+      </Tab>
+    </template>
+    <template #panels>
+      <TabPanel v-for="cat in categories" class="p-4">{{ cat.content }}</TabPanel>
+    </template>
+  </Tabs>
+</template>
+```
+- **用法**: `Tabs` 组件提供插槽，你需要循环你的数据来生成 `Tab` 和 `TabPanel`。
+- **Slots**:
+  - `list`: 放置 `Tab` 组件的地方。你需要为 `Tab` 的子元素添加 `ui-tab` 类。
+  - `panels`: 放置 `TabPanel` 组件的地方。
+
+### Select
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import Select from './components/Select/Select.vue';
+const options = ref([{ label: 'Opt 1', value: 1 }, ...]);
+const selected = ref(options.value[0]);
+</script>
+<template>
+  <Select v-model="selected" :options="options" />
+</template>
+```
+- **v-model**: 绑定当前选中的对象。
+- **Props**:
+  - `options`: `Array<{ label: string, value: any }>` (选项数组)
+  - `placeholder`: `string`
 
 ### Dropdown
 
