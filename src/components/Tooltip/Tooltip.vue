@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
-import { createPopper, Placement } from '@popperjs/core';
+import { createPopper, Placement } from 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/+esm';
 
 // Define Component Props
 interface Props {
