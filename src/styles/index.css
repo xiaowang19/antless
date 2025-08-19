@@ -7,8 +7,16 @@
 @import "./components.css";
 
 /* 3. Import all theme files */
-@import "./themes/_ant.css";
+/* @import "./themes/_ant.css"; */
 /* In the future, other themes like _element.css would be imported here */
+
+/* ==========================================================================
+   DIAGNOSTIC STYLE
+   ========================================================================== */
+.theme-ant [class*="ui-"] {
+  border: 2px solid red !important;
+}
+
 
 /* 4. Import Tailwind's component and utility styles */
 @tailwind components;
