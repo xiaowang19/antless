@@ -469,6 +469,31 @@
       @apply font-semibold;
     }
   }
+
+  /* ==========================================================================
+     Form & FormItem Component Theme
+     ========================================================================== */
+  .ui-form-item {
+    @apply mb-6;
+  }
+
+  /* Horizontal Layout */
+  .ui-form-item--horizontal {
+    @apply flex items-center;
+    .ui-form-item__label {
+      @apply flex-shrink-0 w-24 text-right pr-4; /* Fixed label width */
+    }
+    .ui-form-item__control {
+      @apply flex-grow;
+    }
+  }
+
+  /* Vertical Layout */
+  .ui-form-item--vertical {
+    .ui-form-item__label {
+      @apply block mb-1 font-medium;
+    }
+  }
 }
 
 

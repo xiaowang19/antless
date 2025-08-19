@@ -327,6 +327,27 @@ const selected = ref(options.value[0]);
   - `options`: `Array<{ label: string, value: any }>` (选项数组)
   - `placeholder`: `string`
 
+### Form
+
+```vue
+<script setup>
+import Form from './components/Form/Form.vue';
+import FormItem from './components/Form/FormItem.vue';
+import Input from './components/Input/Input.vue';
+</script>
+<template>
+  <Form layout="horizontal">
+    <FormItem label="Username">
+      <Input />
+    </FormItem>
+  </Form>
+</template>
+```
+- **Form Props**:
+  - `layout`: `'horizontal' | 'vertical'` (表单布局)
+- **FormItem Props**:
+  - `label`: `string` (标签文本)
+
 ### Dropdown
 
 ```vue

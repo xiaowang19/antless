@@ -5,6 +5,8 @@ import Input from '../components/Input/Input.vue';
 import Checkbox from '../components/Checkbox/Checkbox.vue';
 import Radio from '../components/Radio/Radio.vue';
 import Select from '../components/Select/Select.vue';
+import Form from '../components/Form/Form.vue';
+import FormItem from '../components/Form/FormItem.vue';
 
 const switchState = ref(false);
 const inputValue = ref('');
@@ -80,6 +82,24 @@ const selectedOption = ref(selectOptions[0]);
         <Select v-model="selectedOption" :options="selectOptions" />
         <p class="mt-2 text-gray-600">Selected: {{ selectedOption }}</p>
       </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- Form Showcase -->
+    <!-- ================================================================== -->
+    <div class="p-6 bg-white rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Form</h2>
+      <Form>
+        <FormItem label="Username">
+          <Input placeholder="Enter username" />
+        </FormItem>
+        <FormItem label="Favorite Fruit">
+          <Select v-model="selectedOption" :options="selectOptions" />
+        </FormItem>
+        <FormItem label="Remember Me">
+          <Checkbox>Agree to terms</Checkbox>
+        </FormItem>
+      </Form>
     </div>
   </div>
 </template>
