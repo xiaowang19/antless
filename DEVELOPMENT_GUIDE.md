@@ -176,4 +176,112 @@ const isOpen = ref(false);
   - `default`: 模态框主体内容。
   - `footer`: 模态框页脚，可以自定义按钮。
 
+---
+
+### Tag
+
+```vue
+<script setup>
+import Tag from './components/Tag/Tag.vue';
+</script>
+<template>
+  <Tag color="blue">Blue Tag</Tag>
+</template>
+```
+- **Props**:
+  - `color`: `'default' | 'blue' | 'green' | 'red' | 'orange' | 'gold' | 'purple'`
+
+### Alert
+
+```vue
+<script setup>
+import Alert from './components/Alert/Alert.vue';
+</script>
+<template>
+  <Alert message="Success Text" type="success" closable />
+</template>
+```
+- **Props**:
+  - `type`: `'success' | 'info' | 'warning' | 'error'`
+  - `message`: `string`
+  - `description`: `string` (optional)
+  - `closable`: `boolean` (optional)
+
+### Checkbox
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import Checkbox from './components/Checkbox/Checkbox.vue';
+const checked = ref(false);
+</script>
+<template>
+  <Checkbox v-model="checked">Checkbox Label</Checkbox>
+</template>
+```
+- **v-model**: 控制多选框的选中状态 (boolean)。
+- **Props**:
+  - `disabled`: `boolean`
+
+### Radio
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import Radio from './components/Radio/Radio.vue';
+const picked = ref('A');
+</script>
+<template>
+  <Radio v-model="picked" value="A" name="group1">Option A</Radio>
+  <Radio v-model="picked" value="B" name="group1">Option B</Radio>
+</template>
+```
+- **v-model**: 绑定单选框组的值。
+- **Props**:
+  - `value`: `any` (当前单选框的值)
+  - `name`: `string` (用于将多个 Radio 组合在一起)
+  - `disabled`: `boolean`
+
+### Card
+
+```vue
+<script setup>
+import Card from './components/Card/Card.vue';
+</script>
+<template>
+  <Card title="Card Title" bordered>
+    <p>Card content.</p>
+  </Card>
+</template>
+```
+- **Props**:
+  - `title`: `string`
+  - `size`: `'default' | 'small'`
+  - `bordered`: `boolean`
+- **Slots**:
+  - `default`: 卡片主体内容。
+  - `extra`: 卡片右上角的额外内容。
+
+### Dropdown
+
+```vue
+<script setup>
+import Dropdown from './components/Dropdown/Dropdown.vue';
+import { MenuItem } from '@headlessui/vue'; // MenuItem is needed for accessibility
+</script>
+<template>
+  <Dropdown>
+    <template #trigger>
+      <Button>Click Me</Button>
+    </template>
+    <MenuItem v-slot="{ active }">
+      <a href="#" :class="['ui-dropdown-item', { 'is-active': active }]">Item 1</a>
+    </MenuItem>
+  </Dropdown>
+</template>
+```
+- **Slots**:
+  - `trigger`: 用于触发下拉菜单的元素。
+  - `default`: 下拉菜单的内容，推荐使用 `MenuItem` 包裹，并为子元素添加 `ui-dropdown-item` 类以获得正确样式。
+
 希望这份文档能帮助你快速上手！

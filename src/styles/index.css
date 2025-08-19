@@ -168,6 +168,218 @@
   .ui-modal__footer {
     @apply mt-4 flex justify-end space-x-2;
   }
+
+  /* ==========================================================================
+     Tag Component Theme
+     ========================================================================== */
+  .ui-tag {
+    @apply inline-block px-2 py-0.5 text-ant-sm leading-normal rounded-ant-sm border;
+  }
+  .ui-tag--default {
+    @apply bg-gray-100 text-ant-text border-ant-border;
+  }
+  .ui-tag--blue {
+    @apply bg-ant-blue-bg text-ant-blue-text border-ant-blue-bg;
+  }
+  .ui-tag--green {
+    @apply bg-ant-green-bg text-ant-green-text border-ant-green-bg;
+  }
+  .ui-tag--red {
+    @apply bg-ant-red-bg text-ant-red-text border-ant-red-bg;
+  }
+  .ui-tag--orange {
+    @apply bg-ant-orange-bg text-ant-orange-text border-ant-orange-bg;
+  }
+  .ui-tag--gold {
+    @apply bg-ant-gold-bg text-ant-gold-text border-ant-gold-bg;
+  }
+  .ui-tag--purple {
+    @apply bg-ant-purple-bg text-ant-purple-text border-ant-purple-bg;
+  }
+
+  /* ==========================================================================
+     Alert Component Theme
+     ========================================================================== */
+  .ui-alert {
+    @apply w-full flex items-start p-4 rounded-ant-base border;
+  }
+  .ui-alert__icon {
+    @apply mr-3 text-lg;
+  }
+  .ui-alert__content {
+    @apply flex-grow;
+  }
+  .ui-alert__message {
+    @apply font-semibold text-ant-text;
+  }
+  .ui-alert__description {
+    @apply text-sm text-ant-text-secondary;
+  }
+  .ui-alert__close-button {
+    @apply ml-3 text-ant-text-secondary hover:text-ant-text;
+  }
+
+  /* Alert Types */
+  .ui-alert--info {
+    @apply bg-ant-blue-bg border-ant-blue-bg;
+    .ui-alert__icon { @apply text-ant-blue-text; }
+  }
+  .ui-alert--success {
+    @apply bg-ant-green-bg border-ant-green-bg;
+    .ui-alert__icon { @apply text-ant-green-text; }
+  }
+  .ui-alert--warning {
+    @apply bg-ant-orange-bg border-ant-orange-bg;
+    .ui-alert__icon { @apply text-ant-orange-text; }
+  }
+  .ui-alert--error {
+    @apply bg-ant-red-bg border-ant-red-bg;
+    .ui-alert__icon { @apply text-ant-red-text; }
+  }
+
+  /* ==========================================================================
+     Checkbox Component Theme
+     ========================================================================== */
+  .ui-checkbox-wrapper {
+    @apply cursor-pointer inline-flex items-center;
+    &.is-disabled {
+      @apply cursor-not-allowed;
+    }
+  }
+  .ui-checkbox {
+    @apply relative inline-block w-4 h-4;
+  }
+  .ui-checkbox__input {
+    @apply absolute opacity-0 w-full h-full cursor-pointer;
+    &[disabled] {
+      @apply cursor-not-allowed;
+    }
+  }
+  .ui-checkbox__inner {
+    @apply block w-4 h-4 border border-ant-border rounded-ant-sm bg-white transition-all;
+    .is-disabled & {
+      @apply bg-ant-bg-disabled;
+    }
+    .is-checked & {
+      @apply bg-ant-primary border-ant-primary;
+    }
+    .is-checked.is-disabled & {
+      @apply bg-gray-300 border-ant-border;
+    }
+  }
+  /* Checkmark style */
+  .ui-checkbox__inner::after {
+    content: ' ';
+    @apply block w-1 h-2 border-solid border-white transform rotate-45 translate-x-1/2 translate-y-1/4 scale-0 transition-transform;
+    border-width: 0 2px 2px 0;
+    .is-checked & {
+      @apply scale-100;
+    }
+  }
+  .ui-checkbox__label {
+    @apply ml-2;
+  }
+
+  /* ==========================================================================
+     Radio Component Theme
+     ========================================================================== */
+  .ui-radio-wrapper {
+    @apply cursor-pointer inline-flex items-center;
+    &.is-disabled {
+      @apply cursor-not-allowed;
+    }
+  }
+  .ui-radio {
+    @apply relative inline-block w-4 h-4;
+  }
+  .ui-radio__input {
+    @apply absolute opacity-0 w-full h-full cursor-pointer;
+    &[disabled] {
+      @apply cursor-not-allowed;
+    }
+  }
+  .ui-radio__inner {
+    @apply block w-4 h-4 border border-ant-border rounded-full bg-white transition-all;
+    .is-disabled & {
+      @apply bg-ant-bg-disabled;
+    }
+    .is-checked & {
+      @apply border-ant-primary;
+    }
+    .is-checked.is-disabled & {
+      @apply border-ant-border;
+      .ui-radio__inner::after {
+        @apply bg-gray-400;
+      }
+    }
+  }
+  /* Dot style */
+  .ui-radio__inner::after {
+    content: ' ';
+    @apply block w-2 h-2 bg-ant-primary rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-0 transition-transform;
+    .is-checked & {
+      @apply scale-100;
+    }
+    .is-disabled & {
+      @apply bg-gray-400;
+    }
+  }
+  .ui-radio__label {
+    @apply ml-2;
+  }
+
+  /* ==========================================================================
+     Card Component Theme
+     ========================================================================== */
+  .ui-card {
+    @apply bg-white rounded-ant-lg;
+    &.is-bordered {
+      @apply border border-ant-border;
+    }
+  }
+  .ui-card__header {
+    @apply flex justify-between items-center border-b border-ant-border;
+  }
+  .ui-card__title {
+    @apply font-semibold;
+  }
+  .ui-card__extra {
+    @apply text-ant-text-secondary;
+  }
+
+  /* Card Sizes */
+  .ui-card--default {
+    .ui-card__header { @apply p-4; }
+    .ui-card__body { @apply p-6; }
+  }
+  .ui-card--small {
+    .ui-card__header { @apply p-2; }
+    .ui-card__body { @apply p-4; }
+    .ui-card__title { @apply text-ant-base; }
+  }
+
+  /* ==========================================================================
+     Dropdown Component Theme
+     ========================================================================== */
+  .ui-dropdown {
+    @apply relative inline-block text-left;
+  }
+  .ui-dropdown__menu {
+    @apply absolute right-0 mt-2 w-56 origin-top-right;
+    @apply bg-white rounded-ant-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none;
+    @apply p-1; /* Padding for the menu items container */
+  }
+
+  /* Style for items passed into the dropdown slot.
+     We target a common class that the user should add. */
+  .ui-dropdown-item {
+    @apply block w-full px-4 py-2 text-left text-ant-base text-ant-text;
+    @apply hover:bg-ant-bg-disabled;
+
+    &.is-active { /* Headless UI adds a `data-active` attribute we can style against */
+      @apply bg-ant-bg-disabled;
+    }
+  }
 }
 
 
