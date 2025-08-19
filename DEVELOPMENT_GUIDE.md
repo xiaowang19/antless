@@ -267,21 +267,28 @@ import Card from './components/Card/Card.vue';
 ```vue
 <script setup>
 import Dropdown from './components/Dropdown/Dropdown.vue';
-import { MenuItem } from '@headlessui/vue'; // MenuItem is needed for accessibility
+import Button from './components/Button/Button.vue'; // The trigger
+import { MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
 </script>
 <template>
   <Dropdown>
-    <template #trigger>
+    <MenuButton as="template">
       <Button>Click Me</Button>
-    </template>
-    <MenuItem v-slot="{ active }">
-      <a href="#" :class="['ui-dropdown-item', { 'is-active': active }]">Item 1</a>
-    </MenuItem>
+    </MenuButton>
+
+    <transition ...>
+      <MenuItems class="ui-dropdown__menu">
+        <MenuItem v-slot="{ active }">
+          <a href="#" :class="['ui-dropdown-item', { 'is-active': active }]">Item 1</a>
+        </MenuItem>
+      </MenuItems>
+    </transition>
   </Dropdown>
 </template>
 ```
-- **Slots**:
-  - `trigger`: 用于触发下拉菜单的元素。
-  - `default`: 下拉菜单的内容，推荐使用 `MenuItem` 包裹，并为子元素添加 `ui-dropdown-item` 类以获得正确样式。
+- **用法**: `Dropdown` 组件是一个简单的包裹容器。你需要直接在其中使用 Headless UI 的 `MenuButton` 和 `MenuItems` 组件。
+  - `MenuButton` 包裹你的触发器（例如我们的 `Button` 组件）。
+  - `MenuItems` 包裹你的菜单项。
+  - `MenuItem` 包裹每一个具体的菜单项，并为子元素（如 `<a>` 标签）添加 `ui-dropdown-item` 类以获得正确样式。
 
 希望这份文档能帮助你快速上手！

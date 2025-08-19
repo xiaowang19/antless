@@ -10,7 +10,7 @@ import Checkbox from './components/Checkbox/Checkbox.vue';
 import Radio from './components/Radio/Radio.vue';
 import Card from './components/Card/Card.vue';
 import Dropdown from './components/Dropdown/Dropdown.vue';
-import { MenuItem } from '@headlessui/vue';
+import { MenuItem, MenuButton, MenuItems } from '@headlessui/vue';
 
 // State for interactive components
 const switchState = ref(false);
@@ -146,15 +146,27 @@ function openModal() {
         <Card title="Card Title" size="small">
           <template #extra>
             <Dropdown>
-              <template #trigger>
+              <MenuButton as="template">
                 <Button type="link">More</Button>
-              </template>
-              <MenuItem v-slot="{ active }">
-                <a href="#" :class="['ui-dropdown-item', { 'is-active': active }]">Menu Item 1</a>
-              </MenuItem>
-              <MenuItem v-slot="{ active }">
-                <a href="#" :class="['ui-dropdown-item', { 'is-active': active }]">Menu Item 2</a>
-              </MenuItem>
+              </MenuButton>
+
+              <transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-from-class="transform scale-95 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in"
+                leave-from-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
+              >
+                <MenuItems class="ui-dropdown__menu">
+                  <MenuItem v-slot="{ active }">
+                    <a href="#" :class="['ui-dropdown-item', { 'is-active': active }]">Menu Item 1</a>
+                  </MenuItem>
+                  <MenuItem v-slot="{ active }">
+                    <a href="#" :class="['ui-dropdown-item', { 'is-active': active }]">Menu Item 2</a>
+                  </MenuItem>
+                </MenuItems>
+              </transition>
             </Dropdown>
           </template>
           <p>Card content goes here.</p>

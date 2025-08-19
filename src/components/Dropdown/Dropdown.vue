@@ -1,31 +1,14 @@
 <script setup lang="ts">
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
+import { Menu } from '@headlessui/vue';
 
-// No specific props needed for this basic version,
-// as functionality is controlled by slots.
+// This component now acts as a simple wrapper for the Menu context.
+// The user will provide MenuButton and MenuItems directly.
 
 </script>
 
 <template>
   <Menu as="div" class="ui-dropdown">
-    <MenuButton as="template">
-      <!-- The trigger element is passed in via a slot -->
-      <slot name="trigger"></slot>
-    </MenuButton>
-
-    <transition
-      enter-active-class="transition duration-100 ease-out"
-      enter-from-class="transform scale-95 opacity-0"
-      enter-to-class="transform scale-100 opacity-100"
-      leave-active-class="transition duration-75 ease-in"
-      leave-from-class="transform scale-100 opacity-100"
-      leave-to-class="transform scale-95 opacity-0"
-    >
-      <MenuItems class="ui-dropdown__menu">
-        <!-- The menu items are passed in via the default slot -->
-        <!-- We expect the user to wrap them in a container if needed -->
-        <slot></slot>
-      </MenuItems>
-    </transition>
+    <!-- Default slot for user to place MenuButton and MenuItems -->
+    <slot></slot>
   </Menu>
 </template>
