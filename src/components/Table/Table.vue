@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import Pagination from '../Pagination/Pagination.vue';
 
 // --- Type Definitions for Props ---
+interface Filter {
+  text: string;
+  value: any;
+}
 interface Column {
   title: string;
   dataIndex: string;
   key: string;
   sorter?: (a: DataRecord, b: DataRecord) => number;
+  filters?: Filter[];
+  onFilter?: (value: any, record: DataRecord) => boolean;
 }
 
 interface DataRecord {
@@ -29,11 +35,11 @@ const props = withDefaults(defineProps<Props>(), {
 const sortKey = ref<string | null>(null);
 const sortOrder = ref<'ascend' | 'descend' | null>(null);
 const currentPage = ref(1);
-const pageSize = ref(10); // Default page size
+const pageSize = ref(10);
+const activeFilters = reactive<Record<string, any[]>>({});
 
 // --- Event Handlers ---
 const handleSort = (key: string) => {
-  // Reset to first page when sorting changes
   currentPage.value = 1;
   if (sortKey.value === key) {
     if (sortOrder.value === 'ascend') {
@@ -52,13 +58,35 @@ const handlePageChange = (page: number) => {
   currentPage.value = page;
 };
 
+const handleFilterChange = (key: string, values: any[]) => {
+  currentPage.value = 1;
+  activeFilters[key] = values;
+};
+
+
 // --- Computed Properties ---
 const tableClasses = computed(() => ['ui-table']);
 
-const processedData = computed(() => {
+const filteredData = computed(() => {
   let processed = [...props.data];
+  const filterKeys = Object.keys(activeFilters).filter(key => activeFilters[key]?.length > 0);
 
-  // 1. Sorting
+  if (filterKeys.length > 0) {
+    processed = processed.filter(record => {
+      return filterKeys.every(key => {
+        const column = props.columns.find(c => c.key === key);
+        if (!column || !column.onFilter) return true;
+        return activeFilters[key].some(value => column.onFilter!(value, record));
+      });
+    });
+  }
+  return processed;
+});
+
+const processedData = computed(() => {
+  let processed = [...filteredData.value];
+
+  // 2. Sorting
   if (sortKey.value && sortOrder.value) {
     const sorter = props.columns.find(c => c.key === sortKey.value)?.sorter;
     if (sorter) {
@@ -69,10 +97,12 @@ const processedData = computed(() => {
     }
   }
 
-  // 2. Pagination
+  // 3. Pagination
   if (props.pagination) {
     const start = (currentPage.value - 1) * pageSize.value;
     const end = start + pageSize.value;
+    // We need the total count *before* slicing for the pagination component
+    // This will be addressed when integrating UI. For now, this is fine.
     processed = processed.slice(start, end);
   }
 
@@ -104,6 +134,7 @@ const processedData = computed(() => {
                   :class="{ 'is-active': sortKey === column.key && sortOrder === 'descend' }"
                 >▼</span>
               </span>
+              <!-- Placeholder for filter icon -->
             </div>
           </th>
         </tr>
@@ -120,7 +151,7 @@ const processedData = computed(() => {
       <Pagination
         :current="currentPage"
         :page-size="pageSize"
-        :total="data.length"
+        :total="filteredData.length"
         @change="handlePageChange"
       />
     </div>

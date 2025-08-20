@@ -386,11 +386,13 @@ const data = ref([
 </template>
 ```
 - **Props**:
-  - `columns`: `Array<{ title:string, dataIndex: string, key: string, sorter?: function }>` (列定义)
+  - `columns`: `Array<{ title:string, dataIndex: string, key: string, sorter?: function, filters?: Array, onFilter?: function }>` (列定义)
     - `sorter`: 一个函数 `(a, b) => number`，用于定义该列的排序逻辑。
+    - `filters`: 一个数组 `Array<{text: string, value: any}>`，定义可用的筛选选项。
+    - `onFilter`: 一个函数 `(value, record) => boolean`，用于执行筛选逻辑。
   - `data`: `Array<object>` (表格数据)
   - `pagination`: `boolean` (是否显示分页，默认为 `false`)
-- **Note**: The table is now styled and supports client-side sorting and pagination.
+- **Note**: The table now supports client-side filtering, sorting, and pagination.
 
 ### Dropdown
 
