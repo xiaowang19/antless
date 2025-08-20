@@ -386,8 +386,9 @@ const data = ref([
 </template>
 ```
 - **Props**:
-  - `columns`: `Array<{ title: string, dataIndex: string, key: string }>` (列定义)
+  - `columns`: `Array<{ title:string, dataIndex: string, key: string }>` (列定义)
   - `data`: `Array<object>` (表格数据)
+- **Note**: The table is now styled to match Ant Design's appearance.
 
 ### Dropdown
 
