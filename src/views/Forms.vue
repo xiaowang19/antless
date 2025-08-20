@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import Switch from '../components/Switch/Switch.vue';
 import Input from '../components/Input/Input.vue';
 import Checkbox from '../components/Checkbox/Checkbox.vue';
@@ -10,8 +10,14 @@ import FormItem from '../components/Form/FormItem.vue';
 import Button from '../components/Button/Button.vue';
 import type { FormRules } from 'async-validator';
 
-const formRef = ref<InstanceType<typeof Form> | null>(null);
+// State for non-form components
+const switchState = ref(false);
+const radioState = ref('A');
+const inputValue = ref('');
+const checkboxState = ref(false);
 
+// State for the Form
+const formRef = ref<InstanceType<typeof Form> | null>(null);
 const formData = reactive({
   username: '',
   fruit: null,
