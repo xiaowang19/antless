@@ -391,6 +391,30 @@ const data = ref([
   - `data`: `Array<object>` (表格数据)
 - **Note**: The table is now styled and supports client-side sorting.
 
+### Pagination
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import Pagination from './components/Pagination/Pagination.vue';
+
+const current = ref(1);
+const total = ref(100);
+const handleChange = (page) => {
+  current.value = page;
+};
+</script>
+<template>
+  <Pagination :current="current" :total="total" @change="handleChange" />
+</template>
+```
+- **Props**:
+  - `current`: `number` (当前页码)
+  - `pageSize`: `number` (每页条数，默认为 10)
+  - `total`: `number` (数据总数)
+- **Emits**:
+  - `change`: `(page: number, pageSize: number) => void` (页码变化时触发)
+
 ### Dropdown
 
 ```vue

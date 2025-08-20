@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Table from '../components/Table/Table.vue';
+import Pagination from '../components/Pagination/Pagination.vue';
+
+const currentPage = ref(1);
+const totalItems = ref(100);
+
+const handlePageChange = (page: number) => {
+  currentPage.value = page;
+};
 
 const columns = ref([
   {
@@ -51,6 +59,14 @@ const data = ref([
     <div class="p-6 bg-white rounded-lg shadow">
       <h2 class="text-xl font-semibold text-gray-700 mb-4">Table</h2>
       <Table :columns="columns" :data="data" />
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- Pagination Showcase -->
+    <!-- ================================================================== -->
+    <div class="p-6 bg-white rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Pagination</h2>
+      <Pagination :current="currentPage" :total="totalItems" @change="handlePageChange" />
     </div>
   </div>
 </template>

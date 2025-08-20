@@ -538,6 +538,36 @@
       }
     }
   }
+
+  /* ==========================================================================
+     Pagination Component Theme
+     ========================================================================== */
+  .ui-pagination {
+    @apply flex items-center justify-center space-x-1;
+  }
+  .ui-pagination-item {
+    @apply min-w-[32px] h-8 px-2 flex items-center justify-center rounded-ant-base border border-ant-border bg-white cursor-pointer transition-colors;
+    @apply hover:border-ant-primary;
+    a {
+      @apply text-ant-text;
+    }
+    &.is-active {
+      @apply border-ant-primary;
+      a {
+        @apply text-ant-primary;
+      }
+    }
+    &.is-disabled {
+      @apply cursor-not-allowed bg-ant-bg-disabled text-ant-disabled;
+      a {
+        @apply text-ant-disabled;
+      }
+      @apply hover:border-ant-border;
+    }
+    &.is-ellipsis {
+      @apply cursor-default border-transparent hover:border-transparent;
+    }
+  }
 }
 
 
