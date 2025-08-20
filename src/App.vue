@@ -6,6 +6,7 @@ import Layout from './views/Layout.vue';
 import Feedback from './views/Feedback.vue';
 import Forms from './views/Forms.vue';
 import Navigation from './views/Navigation.vue';
+import DataDisplay from './views/DataDisplay.vue';
 
 const views = {
   General: markRaw(General),
@@ -13,6 +14,7 @@ const views = {
   Feedback: markRaw(Feedback),
   Forms: markRaw(Forms),
   Navigation: markRaw(Navigation),
+  DataDisplay: markRaw(DataDisplay),
 };
 
 const activeView = shallowRef(views.General);

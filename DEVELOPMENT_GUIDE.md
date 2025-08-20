@@ -45,7 +45,8 @@ npm run dev
 │   │   ├── General.vue
 │   │   ├── Layout.vue
 │   │   ├── Feedback.vue
-│   │   └── Forms.vue
+│   │   ├── Forms.vue
+│   │   └── DataDisplay.vue
 │   ├── styles/              # 全局样式
 │   │   └── index.css        # CSS 主入口文件 (包含所有样式)
 │   ├── App.vue              # 根组件，应用主布局
@@ -363,6 +364,30 @@ const submitForm = () => {
   - `prop`: `string` (对应 `model` 中的字段名)
 - **Form Methods**:
   - `validate()`: 调用此方法来校验整个表单，返回一个 Promise。
+
+### Table
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import Table from './components/Table/Table.vue';
+
+const columns = ref([
+  { title: 'Name', dataIndex: 'name', key: 'name' },
+  { title: 'Age', dataIndex: 'age', key: 'age' },
+]);
+const data = ref([
+  { key: '1', name: 'John Doe', age: 32 },
+  { key: '2', name: 'Jane Doe', age: 30 },
+]);
+</script>
+<template>
+  <Table :columns="columns" :data="data" />
+</template>
+```
+- **Props**:
+  - `columns`: `Array<{ title: string, dataIndex: string, key: string }>` (列定义)
+  - `data`: `Array<object>` (表格数据)
 
 ### Dropdown
 
