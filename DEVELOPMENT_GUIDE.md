@@ -389,31 +389,8 @@ const data = ref([
   - `columns`: `Array<{ title:string, dataIndex: string, key: string, sorter?: function }>` (列定义)
     - `sorter`: 一个函数 `(a, b) => number`，用于定义该列的排序逻辑。
   - `data`: `Array<object>` (表格数据)
-- **Note**: The table is now styled and supports client-side sorting.
-
-### Pagination
-
-```vue
-<script setup>
-import { ref } from 'vue';
-import Pagination from './components/Pagination/Pagination.vue';
-
-const current = ref(1);
-const total = ref(100);
-const handleChange = (page) => {
-  current.value = page;
-};
-</script>
-<template>
-  <Pagination :current="current" :total="total" @change="handleChange" />
-</template>
-```
-- **Props**:
-  - `current`: `number` (当前页码)
-  - `pageSize`: `number` (每页条数，默认为 10)
-  - `total`: `number` (数据总数)
-- **Emits**:
-  - `change`: `(page: number, pageSize: number) => void` (页码变化时触发)
+  - `pagination`: `boolean` (是否显示分页，默认为 `false`)
+- **Note**: The table is now styled and supports client-side sorting and pagination.
 
 ### Dropdown
 

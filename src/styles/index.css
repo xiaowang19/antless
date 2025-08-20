@@ -568,6 +568,9 @@
       @apply cursor-default border-transparent hover:border-transparent;
     }
   }
+  .ui-table__pagination {
+    @apply mt-4 flex justify-end;
+  }
 }
 
 

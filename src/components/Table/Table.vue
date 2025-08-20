@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import Pagination from '../Pagination/Pagination.vue';
 
 // --- Type Definitions for Props ---
 interface Column {
@@ -17,39 +18,24 @@ interface DataRecord {
 interface Props {
   columns: Column[];
   data: DataRecord[];
+  pagination?: boolean;
 }
 
-const props = defineProps<Props>();
-
-// --- Sorting State ---
-const sortKey = ref<string | null>(null);
-const sortOrder = ref<'ascend' | 'descend' | null>(null);
-
-// --- Sorting Logic ---
-const sortedData = computed(() => {
-  if (!sortKey.value || !sortOrder.value) {
-    return props.data;
-  }
-
-  const sorter = props.columns.find(c => c.key === sortKey.value)?.sorter;
-  if (!sorter) {
-    return props.data;
-  }
-
-  // Create a new array to avoid mutating the prop
-  const dataCopy = [...props.data];
-
-  dataCopy.sort((a, b) => {
-    const result = sorter(a, b);
-    return sortOrder.value === 'ascend' ? result : -result;
-  });
-
-  return dataCopy;
+const props = withDefaults(defineProps<Props>(), {
+  pagination: false,
 });
 
+// --- State Management ---
+const sortKey = ref<string | null>(null);
+const sortOrder = ref<'ascend' | 'descend' | null>(null);
+const currentPage = ref(1);
+const pageSize = ref(10); // Default page size
+
+// --- Event Handlers ---
 const handleSort = (key: string) => {
+  // Reset to first page when sorting changes
+  currentPage.value = 1;
   if (sortKey.value === key) {
-    // Cycle through states: ascend -> descend -> null
     if (sortOrder.value === 'ascend') {
       sortOrder.value = 'descend';
     } else if (sortOrder.value === 'descend') {
@@ -57,15 +43,41 @@ const handleSort = (key: string) => {
       sortKey.value = null;
     }
   } else {
-    // Start with ascend on new column
     sortKey.value = key;
     sortOrder.value = 'ascend';
   }
 };
 
+const handlePageChange = (page: number) => {
+  currentPage.value = page;
+};
 
 // --- Computed Properties ---
 const tableClasses = computed(() => ['ui-table']);
+
+const processedData = computed(() => {
+  let processed = [...props.data];
+
+  // 1. Sorting
+  if (sortKey.value && sortOrder.value) {
+    const sorter = props.columns.find(c => c.key === sortKey.value)?.sorter;
+    if (sorter) {
+      processed.sort((a, b) => {
+        const result = sorter(a, b);
+        return sortOrder.value === 'ascend' ? result : -result;
+      });
+    }
+  }
+
+  // 2. Pagination
+  if (props.pagination) {
+    const start = (currentPage.value - 1) * pageSize.value;
+    const end = start + pageSize.value;
+    processed = processed.slice(start, end);
+  }
+
+  return processed;
+});
 
 </script>
 
@@ -97,12 +109,20 @@ const tableClasses = computed(() => ['ui-table']);
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(record, index) in sortedData" :key="record.key || index">
+        <tr v-for="(record, index) in processedData" :key="record.key || index">
           <td v-for="column in columns" :key="column.key">
             {{ record[column.dataIndex] }}
           </td>
         </tr>
       </tbody>
     </table>
+    <div v-if="pagination" class="ui-table__pagination">
+      <Pagination
+        :current="currentPage"
+        :page-size="pageSize"
+        :total="data.length"
+        @change="handlePageChange"
+      />
+    </div>
   </div>
 </template>

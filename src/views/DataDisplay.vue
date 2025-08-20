@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Table from '../components/Table/Table.vue';
-import Pagination from '../components/Pagination/Pagination.vue';
-
-const currentPage = ref(1);
-const totalItems = ref(100);
-
-const handlePageChange = (page: number) => {
-  currentPage.value = page;
-};
 
 const columns = ref([
   {
@@ -20,7 +12,7 @@ const columns = ref([
     title: 'Age',
     dataIndex: 'age',
     key: 'age',
-    sorter: (a, b) => a.age - b.age,
+    sorter: (a: any, b: any) => a.age - b.age,
   },
   {
     title: 'Address',
@@ -29,26 +21,15 @@ const columns = ref([
   },
 ]);
 
-const data = ref([
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-]);
+// Generate a larger dataset
+const data = ref(
+  Array.from({ length: 45 }, (_, i) => ({
+    key: `${i + 1}`,
+    name: `User Name ${i + 1}`,
+    age: Math.floor(Math.random() * 40) + 20, // Age between 20 and 60
+    address: `London No. ${i + 1} Lake Park`,
+  }))
+);
 </script>
 
 <template>
@@ -57,16 +38,8 @@ const data = ref([
     <!-- Table Showcase -->
     <!-- ================================================================== -->
     <div class="p-6 bg-white rounded-lg shadow">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">Table</h2>
-      <Table :columns="columns" :data="data" />
-    </div>
-
-    <!-- ================================================================== -->
-    <!-- Pagination Showcase -->
-    <!-- ================================================================== -->
-    <div class="p-6 bg-white rounded-lg shadow">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">Pagination</h2>
-      <Pagination :current="currentPage" :total="totalItems" @change="handlePageChange" />
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Table with Pagination & Sorting</h2>
+      <Table :columns="columns" :data="data" :pagination="true" />
     </div>
   </div>
 </template>
