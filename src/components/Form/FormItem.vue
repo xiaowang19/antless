@@ -38,7 +38,7 @@ const validate = async () => {
   state.isValidating = true;
 
   try {
-    await new (await import('async-validator')).default(descriptor).validate(data);
+    await new (await import('https://cdn.jsdelivr.net/npm/async-validator@4.2.5/+esm')).default(descriptor).validate(data);
     state.error = '';
     if (formContext?.formState[prop]) {
       formContext.formState[prop].error = '';

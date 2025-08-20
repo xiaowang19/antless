@@ -29,7 +29,7 @@ const validate = async () => {
   if (!props.model || !props.rules) return true;
 
   try {
-    await new (await import('async-validator')).default(props.rules).validate(props.model);
+    await new (await import('https://cdn.jsdelivr.net/npm/async-validator@4.2.5/+esm')).default(props.rules).validate(props.model);
     // Clear all errors
     Object.keys(formState).forEach(key => {
       formState[key].error = '';
