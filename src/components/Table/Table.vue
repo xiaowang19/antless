@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, reactive } from 'vue';
 import Pagination from '../Pagination/Pagination.vue';
+import Checkbox from '../Checkbox/Checkbox.vue';
+import Button from '../Button/Button.vue';
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
+
 
 // --- Type Definitions for Props ---
 interface Filter {
@@ -37,6 +41,7 @@ const sortOrder = ref<'ascend' | 'descend' | null>(null);
 const currentPage = ref(1);
 const pageSize = ref(10);
 const activeFilters = reactive<Record<string, any[]>>({});
+const tempFilters = reactive<Record<string, any[]>>({});
 
 // --- Event Handlers ---
 const handleSort = (key: string) => {
@@ -61,6 +66,22 @@ const handlePageChange = (page: number) => {
 const handleFilterChange = (key: string, values: any[]) => {
   currentPage.value = 1;
   activeFilters[key] = values;
+};
+
+const openFilterMenu = (key: string) => {
+  // When opening, sync temp state with active state
+  tempFilters[key] = activeFilters[key] ? [...activeFilters[key]] : [];
+};
+
+const confirmFilter = (key: string) => {
+  handleFilterChange(key, tempFilters[key]);
+  // Here we would need to close the dropdown, which requires access to the `close` function from Headless UI.
+  // We can achieve this by passing the close function from the slot.
+};
+
+const resetFilter = (key: string) => {
+  tempFilters[key] = [];
+  handleFilterChange(key, []);
 };
 
 
@@ -134,7 +155,41 @@ const processedData = computed(() => {
                   :class="{ 'is-active': sortKey === column.key && sortOrder === 'descend' }"
                 >▼</span>
               </span>
-              <!-- Placeholder for filter icon -->
+              <Menu as="div" class="ui-dropdown" v-if="column.filters">
+                <MenuButton as="template" @click="openFilterMenu(column.key)">
+                  <span class="ui-table__filter-trigger" :class="{'is-active': activeFilters[column.key]?.length > 0}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 01.628.74v2.288a2.25 2.25 0 01-.659 1.59l-4.682 4.683a2.25 2.25 0 00-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0110 18v-5.963a2.25 2.25 0 00-.659-1.59L4.659 5.78a2.25 2.25 0 01-.659-1.59V2.34a.75.75 0 01.628-.74z"></path></svg>
+                  </span>
+                </MenuButton>
+                <transition
+                  enter-active-class="transition duration-100 ease-out"
+                  enter-from-class="transform scale-95 opacity-0"
+                  enter-to-class="transform scale-100 opacity-100"
+                  leave-active-class="transition duration-75 ease-in"
+                  leave-from-class="transform scale-100 opacity-100"
+                  leave-to-class="transform scale-95 opacity-0"
+                >
+                  <MenuItems class="ui-table__filter-menu" static>
+                    <div class="px-1 py-1 space-y-1">
+                      <MenuItem v-for="filter in column.filters" :key="filter.value" as="template">
+                        <label class="ui-dropdown-item flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            :value="filter.value"
+                            v-model="tempFilters[column.key]"
+                            class="ui-checkbox__input--hidden"
+                          />
+                          <span>{{ filter.text }}</span>
+                        </label>
+                      </MenuItem>
+                    </div>
+                    <div class="ui-table__filter-footer">
+                      <Button type="link" size="small" @click="resetFilter(column.key)">Reset</Button>
+                      <Button type="primary" size="small" @click="confirmFilter(column.key)">OK</Button>
+                    </div>
+                  </MenuItems>
+                </transition>
+              </Menu>
             </div>
           </th>
         </tr>

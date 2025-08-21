@@ -537,6 +537,23 @@
         @apply text-ant-primary;
       }
     }
+    .ui-table__filter-trigger {
+      @apply ml-1 text-gray-400 hover:text-ant-primary;
+      &.is-active {
+        @apply text-ant-primary;
+      }
+    }
+    .ui-table__filter-menu {
+      @apply absolute right-0 mt-2 w-48 origin-top-right;
+      @apply bg-white rounded-ant-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none;
+    }
+    .ui-table__filter-footer {
+      @apply p-2 border-t border-ant-border flex justify-between items-center;
+    }
+    .ui-checkbox__input--hidden {
+      /* While this is a raw input, we can style it like our custom one if needed, but for now, just basics */
+      @apply mr-2;
+    }
   }
 
   /* ==========================================================================
