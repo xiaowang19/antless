@@ -10,17 +10,19 @@ import FormItem from '../components/Form/FormItem.vue';
 import Button from '../components/Button/Button.vue';
 import type { FormRules } from 'async-validator';
 
-// State for non-form components
-const switchState = ref(false);
-const radioState = ref('A');
-const inputValue = ref('');
-const checkboxState = ref(false);
+// Define options once, used by both standalone Select and Form Select
 const selectOptions = [
   { label: 'Apple', value: 'apple' },
   { label: 'Banana', value: 'banana' },
   { label: 'Orange', value: 'orange' },
 ];
-const selectedOption = ref(selectOptions[1]); // A different default for this standalone select
+
+// State for non-form components
+const switchState = ref(false);
+const radioState = ref('A');
+const inputValue = ref('');
+const checkboxState = ref(false);
+const selectedOption = ref(selectOptions[1]); // For the standalone Select
 
 // State for the Form
 const formRef = ref<InstanceType<typeof Form> | null>(null);
