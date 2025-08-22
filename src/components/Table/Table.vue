@@ -40,7 +40,7 @@ const sortKey = ref<string | null>(null);
 const sortOrder = ref<'ascend' | 'descend' | null>(null);
 const currentPage = ref(1);
 const pageSize = ref(10);
-const activeFilters = reactive<Record<string, any[]>>({});
+const activeFilters = ref<Record<string, any[]>>({});
 const tempFilters = reactive<Record<string, any[]>>({});
 
 // --- Event Handlers ---
@@ -65,12 +65,18 @@ const handlePageChange = (page: number) => {
 
 const handleFilterChange = (key: string, values: any[]) => {
   currentPage.value = 1;
-  activeFilters[key] = values;
+  const newFilters = { ...activeFilters.value };
+  if (values.length === 0) {
+    delete newFilters[key];
+  } else {
+    newFilters[key] = values;
+  }
+  activeFilters.value = newFilters;
 };
 
 const openFilterMenu = (key: string) => {
   // When opening, sync temp state with active state
-  tempFilters[key] = activeFilters[key] ? [...activeFilters[key]] : [];
+  tempFilters[key] = activeFilters.value[key] ? [...activeFilters.value[key]] : [];
 };
 
 const confirmFilter = (key: string, close: () => void) => {
@@ -90,14 +96,18 @@ const tableClasses = computed(() => ['ui-table']);
 
 const filteredData = computed(() => {
   let processed = [...props.data];
-  const filterKeys = Object.keys(activeFilters).filter(key => activeFilters[key]?.length > 0);
+  const filterKeys = Object.keys(activeFilters.value);
 
   if (filterKeys.length > 0) {
     processed = processed.filter(record => {
       return filterKeys.every(key => {
+        const activeValues = activeFilters.value[key];
+        if (!activeValues || activeValues.length === 0) return true;
+
         const column = props.columns.find(c => c.key === key);
         if (!column || !column.onFilter) return true;
-        return activeFilters[key].some(value => column.onFilter!(value, record));
+
+        return activeValues.some(value => column.onFilter!(value, record));
       });
     });
   }
@@ -157,7 +167,7 @@ const processedData = computed(() => {
               </span>
               <Menu as="div" class="ui-dropdown" v-if="column.filters" v-slot="{ close }">
                 <MenuButton as="template" @click="openFilterMenu(column.key)">
-                  <span class="ui-table__filter-trigger" :class="{'is-active': activeFilters[column.key]?.length > 0}">
+                  <span class="ui-table__filter-trigger" :class="{'is-active': activeFilters.value[column.key]?.length > 0}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 01.628.74v2.288a2.25 2.25 0 01-.659 1.59l-4.682 4.683a2.25 2.25 0 00-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0110 18v-5.963a2.25 2.25 0 00-.659-1.59L4.659 5.78a2.25 2.25 0 01-.659-1.59V2.34a.75.75 0 01.628-.74z"></path></svg>
                   </span>
                 </MenuButton>
