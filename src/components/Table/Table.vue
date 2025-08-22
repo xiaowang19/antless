@@ -100,6 +100,7 @@ const filteredData = computed(() => {
 
   if (filterKeys.length > 0) {
     processed = processed.filter(record => {
+      if (!record) return false; // Defensive check
       return filterKeys.every(key => {
         const activeValues = activeFilters.value[key];
         if (!activeValues || activeValues.length === 0) return true;

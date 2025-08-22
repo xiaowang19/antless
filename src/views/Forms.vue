@@ -15,6 +15,12 @@ const switchState = ref(false);
 const radioState = ref('A');
 const inputValue = ref('');
 const checkboxState = ref(false);
+const selectOptions = [
+  { label: 'Apple', value: 'apple' },
+  { label: 'Banana', value: 'banana' },
+  { label: 'Orange', value: 'orange' },
+];
+const selectedOption = ref(selectOptions[1]); // A different default for this standalone select
 
 // State for the Form
 const formRef = ref<InstanceType<typeof Form> | null>(null);
