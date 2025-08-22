@@ -64,6 +64,7 @@ const handlePageChange = (page: number) => {
 };
 
 const handleFilterChange = (key: string, values: any[]) => {
+  alert(`Filtering by key: "${key}" with values: [${values.join(', ')}]`);
   currentPage.value = 1;
   activeFilters[key] = values;
 };
