@@ -186,7 +186,7 @@ const processedData = computed(() => {
                     </div>
                     <div class="ui-table__filter-footer">
                       <Button type="link" size="small" @click="resetFilter(column.key, close)">Reset</Button>
-                      <Button type="primary" size="small" @click="confirmFilter(column.key, close)">OK</Button>
+                      <Button type="primary" size="small" @click="alert('OK button clicked!'); confirmFilter(column.key, close)">OK</Button>
                     </div>
                   </MenuItems>
                 </transition>
