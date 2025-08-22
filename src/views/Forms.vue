@@ -36,12 +36,6 @@ const formRules: FormRules = {
   agree: [{ type: 'enum', enum: [true], message: 'You must agree to the terms' }],
 };
 
-const selectOptions = [
-  { label: 'Apple', value: 'apple' },
-  { label: 'Banana', value: 'banana' },
-  { label: 'Orange', value: 'orange' },
-];
-
 const handleSubmit = () => {
   formRef.value?.validate().then((valid) => {
     if (valid) {
