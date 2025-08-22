@@ -133,8 +133,6 @@ const processedData = computed(() => {
   if (props.pagination) {
     const start = (currentPage.value - 1) * pageSize.value;
     const end = start + pageSize.value;
-    // We need the total count *before* slicing for the pagination component
-    // This will be addressed when integrating UI. For now, this is fine.
     processed = processed.slice(start, end);
   }
 
