@@ -73,15 +73,15 @@ const openFilterMenu = (key: string) => {
   tempFilters[key] = activeFilters[key] ? [...activeFilters[key]] : [];
 };
 
-const confirmFilter = (key: string) => {
+const confirmFilter = (key: string, close: () => void) => {
   handleFilterChange(key, tempFilters[key]);
-  // Here we would need to close the dropdown, which requires access to the `close` function from Headless UI.
-  // We can achieve this by passing the close function from the slot.
+  close();
 };
 
-const resetFilter = (key: string) => {
+const resetFilter = (key: string, close: () => void) => {
   tempFilters[key] = [];
   handleFilterChange(key, []);
+  close();
 };
 
 
@@ -155,7 +155,7 @@ const processedData = computed(() => {
                   :class="{ 'is-active': sortKey === column.key && sortOrder === 'descend' }"
                 >▼</span>
               </span>
-              <Menu as="div" class="ui-dropdown" v-if="column.filters">
+              <Menu as="div" class="ui-dropdown" v-if="column.filters" v-slot="{ close }">
                 <MenuButton as="template" @click="openFilterMenu(column.key)">
                   <span class="ui-table__filter-trigger" :class="{'is-active': activeFilters[column.key]?.length > 0}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 01.628.74v2.288a2.25 2.25 0 01-.659 1.59l-4.682 4.683a2.25 2.25 0 00-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0110 18v-5.963a2.25 2.25 0 00-.659-1.59L4.659 5.78a2.25 2.25 0 01-.659-1.59V2.34a.75.75 0 01.628-.74z"></path></svg>
@@ -184,8 +184,8 @@ const processedData = computed(() => {
                       </MenuItem>
                     </div>
                     <div class="ui-table__filter-footer">
-                      <Button type="link" size="small" @click="resetFilter(column.key)">Reset</Button>
-                      <Button type="primary" size="small" @click="confirmFilter(column.key)">OK</Button>
+                      <Button type="link" size="small" @click="resetFilter(column.key, close)">Reset</Button>
+                      <Button type="primary" size="small" @click="confirmFilter(column.key, close)">OK</Button>
                     </div>
                   </MenuItems>
                 </transition>
