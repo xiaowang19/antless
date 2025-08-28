@@ -1,8 +1,13 @@
 {
-  "name": "temp-project",
-  "private": true,
-  "version": "0.0.0",
+  "name": "antless",
+  "private": false,
+  "version": "0.1.0",
   "type": "module",
+  "main": "./dist/antless.umd.cjs",
+  "module": "./dist/antless.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
@@ -11,7 +16,9 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
     "@popperjs/core": "^2.11.8",
-    "async-validator": "^4.2.5",
+    "async-validator": "^4.2.5"
+  },
+  "peerDependencies": {
     "vue": "^3.5.18"
   },
   "devDependencies": {
